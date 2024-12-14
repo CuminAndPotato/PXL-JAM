@@ -606,17 +606,22 @@ let fusitorColorToPxlColor color =
 
 let drawResistor (colors: Color list) = scene {
     for (i, c) in List.indexed colors do
-        rect.xywh(i * 3, 0, 2, 10).fill(c)
+        rect.xywh(1 + i * 3, 0, 2, 10).fill(c)
+}
+
+let drawTextInfo(resistance: float) = scene {
+    let s = resistance.ToString()
+    text.var4x5(s, 1, 12)
+    text.var4x5("Ohm", 1, 18)
 }
 
 scene {
     let! ctx = getCtx()
-
-    let resistor = FusistorCore.Resistor.determine(250.0, Some 10.0, None)
+    let resistance = 250.0
+    let resistor = FusistorCore.Resistor.determine(resistance, Some 10.0, None)
     let bands = resistor.Value.Bands() |> List.map fusitorColorToPxlColor
     drawResistor bands
-    text.var4x5("250", 0, 12)
-    text.var4x5("Ohm", 0, 18)
+    drawTextInfo resistance
 }
 |> Simulator.start
 
