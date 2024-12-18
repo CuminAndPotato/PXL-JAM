@@ -561,6 +561,17 @@ module FusistorCore =
                             Color.FromTolerance tol
                         )
                     )
+                | 2, Some tol, Some tcr ->
+                    Some(
+                        SixBand(
+                            Color.FromInt digits.[0],
+                            Color.FromInt digits.[1],
+                            Color.FromInt 0,
+                            Color.FromInt(e - 1),
+                            Color.FromTolerance tol,
+                            Color.FromTcr tcr
+                        )
+                    )
                 | 3, Some tol, None ->
                     Some(
                         FiveBand(
