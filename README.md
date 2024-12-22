@@ -47,6 +47,7 @@ To programm PXL-Apps, you need to set up your development environment. Here’s 
 **Mandatory**
 
 - [**.NET 8 SDK**](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+- [**Node / npm** - current LTS](https://nodejs.org)
 
 **Optional (Recommended)**
 
