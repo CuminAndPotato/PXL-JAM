@@ -1,5 +1,4 @@
 ﻿#load "../../.deps/PxlLocalDevShadow.fsx"
-
 open PxlLocalDevShadow
 
 open System
@@ -11,7 +10,10 @@ open Pxl.Ui
 /// s: Saturation (0.0-1.0)
 /// v: Value (0.0-1.0)
 /// Returns a tuple (R, G, B) where each value is in the range 0-255.
-let hsvToRgb (h: float) (s: float) (v: float) =
+let hsv (h: float) (s: float) (v: float) =
+    let h = h % 360.0
+    let s = s
+    let v = v
     let c = v * s
     let x = c * (1.0 - abs ((h / 60.0) % 2.0 - 1.0))
     let m = v - c
@@ -28,46 +30,47 @@ let hsvToRgb (h: float) (s: float) (v: float) =
     let g = (g' + m) * 255.0 |> int
     let b = (b' + m) * 255.0 |> int
 
-    r, g, b
+    (r, g, b) |> Color.rgb
 
 let time (now: DateTime) =
     scene {
-        let! ctx = getCtx ()
+        let! ctx = getCtx()
 
-        let timeText =
-            text.var4x5($"{now.Hour}:{now:mm}").color(Colors.white)
-
-        let textWidth = timeText.measure ()
+        let timeText = text.var4x5($"%d{now.Hour}:%02d{now.Minute}").color(Colors.white)
+        let textWidth = timeText.measure()
         let marginLeft = (ctx.width - textWidth) / 2
-
-        let marginTop =
-            (ctx.height - (int timeText._data.fontSize) - 1)
-            / 2
-
+        let marginTop = (ctx.height - (int timeText._data.fontSize) - 1) / 2
         timeText
             .xy(marginLeft, marginTop)
-            .color(Colors.white)
+            .color (Colors.white)
     }
 
-let diffuser =
+let lines hour minute second =
     scene {
-        rect
-            .xywh(0, 7, 24, 9)
-            .fill(Color.argb (80, 0, 0, 0))
-            .useAntiAlias ()
-
-        rect
-            .xywh(0, 8, 24, 7)
-            .fill(Color.argb (80, 0, 0, 0))
-            .useAntiAlias ()
-    }
-
-let colorsScene =
-    scene {
-        for i in 0..24 do
-            for j in 0..24 do
-                let index = (float (i*25+j)) * 360.0 / (25.0*25.0)
-                pxl.xy(j,i).stroke(hsvToRgb index 0.8 0.8 |> Color.rgb)
+        let saturation =
+            if hour <= 15 then
+                0.3 + (0.7 * float hour / 15.0)
+            else
+                0.3 + (0.7 * (23.0 - (float hour)) / 9.0)
+        let value =
+            if hour <= 15 then
+                0.5 + (0.5 * float hour / 15.0)
+            else
+                0.5 + (0.5 * (23.0 - (float hour)) / 9.0)
+        let seed = hour * minute * 20 |> float
+        for s in 0..(min second 11) do
+            rect.xywh(s, s, 23 - (2*s), 23 - (2*s)).stroke(hsv (seed + float s * 10.0) saturation value).strokeThickness(1).noAntiAlias()
+        for s in 12..(min second 23) do
+            rect.xywh(s, s, 23 - (2*s), 23 - (2*s)).stroke(hsv (seed + float s * 10.0) saturation value).strokeThickness(1).noAntiAlias()
+        for s in 24..(min second 35) do
+            let s = s % 24
+            rect.xywh(s, s, 23 - (2*s), 23 - (2*s)).stroke(hsv (seed + (float s + 24.0) * 10.0) saturation value).strokeThickness(1).noAntiAlias()
+        for s in 36..(min second 47) do
+            let s = s % 24
+            rect.xywh(s, s, 23 - (2*s), 23 - (2*s)).stroke(hsv (seed + (float s + 24.0) * 10.0) saturation value).strokeThickness(1).noAntiAlias()
+        for s in 48..(min second 59) do
+            let s = s % 24
+            rect.xywh(s, s, 23 - (2*s), 23 - (2*s)).stroke(hsv (seed + (float s + 48.0) * 10.0) saturation value).strokeThickness(1).noAntiAlias()
     }
 
 let hand second =
@@ -139,31 +142,19 @@ let hand second =
                 .stroke(Colors.black)
                 .strokeThickness(3)
                 .useAntiAlias()//Color.argb(1.0, 0.0, 0.0, 0.0))
-
-        // let length = 11.0
-        // let angle = float ((second - 15.0) % 60.0) * 6.0 |> degreesToRadians
-        // let dx = (cos angle) * length
-        // let dy = (sin angle) * length
-        //
-        // pxl
-        //     .xy(int (round(11.5 + dx)), int (round (11.5 + dy)))
-        //     .stroke(Colors.black)//Color.argb(1.0, 0.0, 0.0, 0.0))
-        //     .strokeThickness(1)
-        //     .noAntiAlias()
-
     }
 
 let all =
     scene {
         let! ctx = getCtx ()
-        colorsScene
-        //for i in 0..59 do
+        lines ctx.now.Hour ctx.now.Minute ctx.now.Second
+        //lines 02 ctx.now.Minute ctx.now.Second
         hand ctx.now.Second
         time ctx.now
     }
 
 all |> Simulator.start
+
 (*
 Simulator.stop ()
 *)
-
