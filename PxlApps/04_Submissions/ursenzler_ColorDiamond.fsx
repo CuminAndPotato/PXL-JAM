@@ -5,6 +5,14 @@ open System
 open Pxl
 open Pxl.Ui
 
+(*
+
+Idea and Design: Nico Enzler
+Programming: Nico und Urs Enzler
+Color optimizations: Nico Enzler
+
+*)
+
 /// Converts HSV to RGB.
 /// h: Hue in degrees (0-360)
 /// s: Saturation (0.0-1.0)
@@ -32,11 +40,11 @@ let hsv (h: float) (s: float) (v: float) =
 
     (r, g, b) |> Color.rgb
 
-let time (now: DateTime) =
+let time hour minute =
     scene {
         let! ctx = getCtx()
 
-        let timeText = text.var4x5($"%d{now.Hour}:%02d{now.Minute}").color(Colors.white)
+        let timeText = text.var4x5($"%02d{hour}:%02d{minute}").color(Colors.white)
         let textWidth = timeText.measure()
         let marginLeft = (ctx.width - textWidth) / 2
         let marginTop = (ctx.height - (int timeText._data.fontSize) - 1) / 2
@@ -141,16 +149,15 @@ let hand second =
             pxl.xy(x, y)
                 .stroke(Colors.black)
                 .strokeThickness(3)
-                .useAntiAlias()//Color.argb(1.0, 0.0, 0.0, 0.0))
+                .useAntiAlias()
     }
 
 let all =
     scene {
         let! ctx = getCtx ()
         lines ctx.now.Hour ctx.now.Minute ctx.now.Second
-        //lines 02 ctx.now.Minute ctx.now.Second
         hand ctx.now.Second
-        time ctx.now
+        time ctx.now.Hour ctx.now.Minute
     }
 
 all |> Simulator.start

@@ -5,6 +5,14 @@ open System
 open Pxl
 open Pxl.Ui
 
+(*
+
+Idea and Design: Nico und Urs Enzler
+Programming: Nico und Urs Enzler
+Color optimizations: Nico Enzler
+
+*)
+
 /// Converts HSV to RGB.
 /// h: Hue in degrees (0-360)
 /// s: Saturation (0.0-1.0)

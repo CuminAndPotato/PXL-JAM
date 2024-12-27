@@ -5,6 +5,14 @@ open System
 open Pxl
 open Pxl.Ui
 
+(*
+
+Idea and Design: Nora Enzler
+Programming: Nora und Urs Enzler
+Color optimizations: Nora Enzler
+
+*)
+
 let time (now: DateTime) =
     scene {
         let! ctx = getCtx()

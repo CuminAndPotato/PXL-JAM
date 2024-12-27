@@ -186,7 +186,7 @@ let getNext (world: World): World=
     nextWorld
 
 let alive =
-    hsvToRgb 00 0.8 0.3 |> Color.rgb
+    hsvToRgb 00 0.8 0.6 |> Color.rgb
 let empty =
     hsvToRgb 200 0.6 0.2 |> Color.rgb
 

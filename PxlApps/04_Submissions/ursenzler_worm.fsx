@@ -11,7 +11,7 @@ let time (now: DateTime) =
         let! ctx = getCtx ()
 
         let timeText =
-            text.var4x5($"{now.Hour}:{now.Minute}").color (Colors.white)
+            text.var4x5($"%02d{now.Hour}:%02d{now.Minute}").color (Colors.white)
 
         let textWidth = timeText.measure ()
         let marginLeft = (ctx.width - textWidth) / 2
