@@ -21,39 +21,69 @@ let time (now: DateTime) =
             .color Colors.white
     }
 
-let image =
+let image1 =
     [
-        "                               yyyyyyyy           g                                 "
-        "                                   yyyyyyyy    ggggg                                "
-        "                               yyyyyyyy       gggggggg                              "
-        "                                   yyyyyyyy     ggg ggg                             "
+        "                                   yyyy           g                                 "
+        "                               yyyyyyyyyyyy    ggggg                                "
+        "                                   yyyy       gggggggg                              "
+        "                               yyyyyyyyyyyy     ggg ggg                             "
         "                                    y y          gg  g                              "
-        "                                    y y     e e                                     "
-        "                                    y y   e eeee                                    "
-        "                                    y y  eeeeeeee                                   "
-        "                                          eeeeee                                    "
-        "                                         eeeeeeee                                   "
-        "                                          e be e                                    "
-        "                                            bb      lll lll                         "
-        "                                            bb      lfl lfl                         "
-        "                                            bb      lfl lfl                         "
-        "                                            bb      ddddddd                         "
-        "                                            bb      dcdddcd                         "
-        "                                            bb      ddddddd                         "
-        "                                            bb      ddcccdd                         "
-        "                                            bb       ddddd                          "
-        "                                            bb       ddddd                          "
-        "                                    tdddddddddddddddddddddd                         "
-        "                                   ttdddddddddddddddddddddd                         "
-        "                                   t dd dd  bb        dd dd                         "
-        "                                     dd dd  bb        dd dd                         "
-
-
+        "                                    y y                                             "
+        "                                    y y                                             "
+        "                                    y y                                             "
+        "                                                                                    "
+        "                                            e e                                     "
+        "                                          e eeee                                    "
+        "       ee  ee                            eeeeeee    lll lll                         "
+        "      eeeeeeee                            eeeee     lfl lfl                         "
+        "     eeeeeeeeeee                         eeeeeee    lfl lfl        _                "
+        "      eeeeeeeee                           e be e    ddddddd       ___      _        "
+        "       e bbe e                              bb      dcdddcd      _____    ___       "
+        "          bb                                bb      ddddddd     ______________      "
+        "          bb                                bb      ddcccdd    ________________     "
+        "          bb                                bb       ddddd    __________________    "
+        "          bb       __                       bb       ddddd   _____________________  "
+        "__        bb     ______             ________tdddddddddddddd_________________________"
+        "__________bb_______________________________ttdddddddddddddd_________________________"
+        "__________bb_______________________________tbdd_dd____dd_dd_________________________"
+        "_____________________________________________dd_dd____dd_dd_________________________"
+    ]
+let image2 =
+    [
+        "                               yyyyyyyyyyyy      gg                                 "
+        "                                   yyyy         ggggg                               "
+        "                               yyyyyyyyyyyy    ggggggg                              "
+        "                                   y y          ggg ggg                             "
+        "                                   y y          gg  gg                              "
+        "                                   y y                                              "
+        "                                   y y                                              "
+        "                                   y y                                              "
+        "                                                                                    "
+        "                                                                                    "
+        "                                            e e                                     "
+        "       ee  ee                             eeeeee    lll lll                         "
+        "      eeeeeeee                             eeee     lfl lfl                         "
+        "     eeeeeeeeeee                         eeeeeeee   lfl lfl        _                "
+        "      eeeeeeeee                           e be e    ddddddd       ___      _        "
+        "       e bbe e                              bb      dcdddcd      _____    ___       "
+        "          bb                                bb      ddddddd     ______________      "
+        "          bb                                bb      ddcccdd    ________________     "
+        "          bb                                bb       ddddd    __________________    "
+        "          bb       __                       bb       ddddd   _____________________  "
+        "__        bb     ______             ________tdddddddddddddd_________________________"
+        "__________bb_______________________________ttdddddddddddddd_________________________"
+        "__________bb______________________________ttbdd_dd____dd_dd_________________________"
+        "______________________________________________dd_dd____dd_dd________________________"
     ]
 
-let shift i =
+let shift animation i =
     let shiftLine (line: string) =
         line.AsSpan().Slice(line.Length - 1 - i - 24, 24).ToString()
+    let image =
+        match animation with
+        | 0 -> image1
+        | 1 -> image2
+        | _ -> image1
     image
     |> List.map shiftLine
 
@@ -63,7 +93,7 @@ let dog (minute: int) (second: int) =
         pxl.xy(second % 24, 1).stroke(Colors.blue)
 
         //if trigger then
-        let current = shift second
+        let current = shift (second % 2) second
 
         let pixels =
             [|0..23|]
@@ -84,8 +114,9 @@ let dog (minute: int) (second: int) =
                 | 'l' -> Colors.saddleBrown
                 | 'f' -> Colors.sandyBrown
                 | 'c' -> Colors.bisque
-                | _ when l <= 20 -> Colors.blue
-                | _ -> Colors.beige
+                | '_' -> Colors.beige
+                | _ -> Colors.blue
+
             pxl.xy(c,l).stroke(color)
     }
 
