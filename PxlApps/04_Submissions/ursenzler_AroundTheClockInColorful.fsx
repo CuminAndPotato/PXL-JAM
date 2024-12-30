@@ -7,6 +7,8 @@ open Pxl.Ui
 
 (*
 
+The 3 lines indicate seconds (0-59), minutes(0-59) and hours(0-23).
+
 Idea and Design: Nico und Urs Enzler
 Programming: Nico und Urs Enzler
 Color optimizations: Nico Enzler
@@ -99,10 +101,10 @@ let minutes minutes =
     }
 
 let hours hour =
-    let getColor s =
-        let delta = hour - s |> float
+    let getColor h =
+        let delta = hour - h |> float
         let v = 0.8 * (59.0 - delta) / 60.0 + 0.2
-        hsvToRgb (40.0 + (15.0 * float s)) 1.0 v
+        hsvToRgb (40.0 + (15.0 * float h)) 1.0 v
     scene {
         let hour = hour - 1
         for s in 0..(min 9 hour) do
@@ -121,7 +123,6 @@ let hours hour =
 
 let all =
     scene {
-        bg.color(hsvToRgb 195.0 0.9 0.0)
         let! ctx = getCtx ()
         time ctx.now.Hour ctx.now.Minute
         seconds ctx.now.Second

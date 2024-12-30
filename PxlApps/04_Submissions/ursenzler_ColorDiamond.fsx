@@ -7,6 +7,10 @@ open Pxl.Ui
 
 (*
 
+This clock changes color based on the time of day.
+The color seed is determined by the hour and minute.
+The saturation and value are adjusted based on the hour of the day. Peak saturation and value are at 15:00.
+
 Idea and Design: Nico Enzler
 Programming: Nico und Urs Enzler
 Color optimizations: Nico Enzler
@@ -50,7 +54,7 @@ let time hour minute =
         let marginTop = (ctx.height - (int timeText._data.fontSize) - 1) / 2
         timeText
             .xy(marginLeft, marginTop)
-            .color (Colors.white)
+            .color Colors.white
     }
 
 let lines hour minute second =

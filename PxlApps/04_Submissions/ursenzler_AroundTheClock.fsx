@@ -5,6 +5,16 @@ open System
 open Pxl
 open Pxl.Ui
 
+(*
+
+The 3 lines indicate seconds (0-59), minutes(0-59) and hours(0-23).
+
+Idea and Design: Urs Enzler
+Programming: Urs Enzler
+Color optimizations: Urs Enzler
+
+*)
+
 /// Converts HSV to RGB.
 /// h: Hue in degrees (0-360)
 /// s: Saturation (0.0-1.0)

@@ -216,17 +216,10 @@ let life =
                 pxl.xy(c,r).stroke(color)
     }
 
-let diffuser =
-    scene {
-        rect.xywh(0, 07, 24, 9).fill(Color.argb(80, 0, 0, 0)).useAntiAlias()
-        rect.xywh(0, 08, 24, 7).fill(Color.argb(80, 0, 0, 0)).useAntiAlias()
-    }
-
 let all =
     scene {
         let! ctx = getCtx ()
         life
-        //diffuser
         time ctx.now
     }
 
