@@ -9,7 +9,7 @@ open Pxl.Ui
 
 Idea and Design: Urs Enzler
 Programming: Urs Enzler
-Color optimizations: Nico Enzler
+Color optimizations: Urs Enzler
 
 *)
 

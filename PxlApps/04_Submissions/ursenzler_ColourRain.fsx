@@ -60,7 +60,6 @@ let rain step =
 
 let all =
     scene {
-        //Colors.white |> _.opacity(0.8) |> bg
         let! ctx = getCtx ()
 
         rain (ctx.now.Second % 24)
