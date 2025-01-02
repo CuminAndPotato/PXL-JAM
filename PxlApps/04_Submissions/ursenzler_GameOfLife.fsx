@@ -32,11 +32,11 @@ let hsvToRgb (h: float) (s: float) (v: float) =
 let numbers =
     [
         [
-            "XXXX"
+            " XX "
             "X XX"
             "XX X"
             "X  X"
-            "XXXX"
+            " XX "
         ]
         [
             "  X "
