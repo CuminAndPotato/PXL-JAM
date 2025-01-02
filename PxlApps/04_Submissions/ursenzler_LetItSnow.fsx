@@ -110,7 +110,7 @@ let time (now: DateTime) =
             .var4x5($"{now:HH}:{now:mm}")
             .color(Colors.white)
             .xy(1, 19)
-            .color(hsva 220 0.7 1 1)
+            .color(hsva 222 0.6 0.8 1)
     }
 
 type Snowflake = Falling | Lying | Empty
@@ -146,26 +146,29 @@ let getNext (world: World): World=
     for i in 0..575 do
         let above = if i >= 24 then Some world[i - 24] else None
         let below = if i + 24 < 576 then Some world[i + 24] else None
+        let leftHill = if i >= 49 then Some world[i - 49] else None
+        let rightHill = if i >= 47 then Some world[i - 47] else None
         let current = world[i]
 
         let state =
-            match above, current, below with
-            | None, Empty, _ ->
+            match above, current, below, leftHill, rightHill with
+            | None, Empty, _, _, _ ->
                 if Random.Shared.Next(10) > 8 && i > lastSnowflakeCreated + 1 then
                     lastSnowflakeCreated <- i
                     Snowflake.Falling else Snowflake.Empty
-            | None, Falling, Some Empty -> Empty
-            | None, Falling, Some Lying -> Lying
-            | _, Lying, _ -> Lying
-            | Some Falling, Empty, Some Empty -> Falling
-            | _, Falling, Some Lying -> Lying
-            | Some Empty, Falling, Some Empty -> Empty
-            | Some Empty, Falling, Some Falling -> Empty
-            | Some Empty, Empty, _ -> Empty
-            | Some Lying, c, _ -> c
-            | Some Falling, Empty, Some Lying -> Falling
-            | _, Falling, None -> Lying
-            | Some Falling, Empty, None -> Falling
+            | None, Falling, Some Empty, _, _ -> Empty
+            | None, Falling, Some Lying, _, _ -> Lying
+            | _, Lying, _, _, _ -> Lying
+            | Some Falling, Empty, Some Empty, _, _ -> Falling
+            | _, Falling, Some Lying, _, _ -> Lying
+            | Some Empty, Falling, Some Empty, _, _ -> Empty
+            | Some Empty, Falling, Some Falling, _, _ -> Empty
+            | Some Empty, Empty, _, Some Lying, _ -> Falling
+            | Some Empty, Empty, _, _, Some Lying -> Falling
+            | Some Lying, _, _, _, _ -> Lying
+            | Some Falling, Empty, Some Lying, _, _ -> Falling
+            | _, Falling, None, _, _ -> Lying
+            | Some Falling, Empty, None, _, _ -> Falling
             | _ -> Empty
         nextWorld[i] <- state
     nextWorld
