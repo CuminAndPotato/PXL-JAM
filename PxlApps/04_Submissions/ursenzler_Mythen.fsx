@@ -80,7 +80,7 @@ let lines hour  =
 
 
 let mythen =
-    image(PxlLocalDev.loadAsset "submissions\ursenzler_Mythen.png", 0, 0)
+    image(PxlLocalDev.loadAsset "submissions/ursenzler_Mythen.png", 0, 0)
 
 let all =
     scene {
