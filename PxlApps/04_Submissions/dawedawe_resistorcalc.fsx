@@ -629,9 +629,9 @@ let drawTextInfo(resistance: float) = scene {
 }
 
 scene {
-    let! ctx = getCtx()
-    // let resistance = 54.0
-    let resistance = 0.123
+    // Provide the resistance value and optionally the tolerance and tcr.
+    // The pxl clock tells you, what resistor/color code to look for.
+    let resistance = 0.321
     let resistor = FusistorCore.Resistor.determine(resistance, Some 10.0, None)
     let bands = resistor.Value.Bands() |> List.map fusitorColorToPxlColor
     drawResistor bands
