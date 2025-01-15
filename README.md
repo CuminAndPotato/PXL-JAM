@@ -1,3 +1,34 @@
+## 🚨 PXL-Jam is Over! Head to the New PXL-Clock Repo! 🚨
+
+🎉 The PXL-Jam was an insightful event, but now it’s time for **the next chapter!** We've launched a **new repository** that takes things to the next level:
+
+👉 **[PXL-Clock: The Official Home for Apps, Tutorials, Collaboration, and More](https://github.com/CuminAndPotato/PXL-Clock)** 👈
+
+### 📦 What’s in the new repo?
+- 🕒 **PXL-Clock Framework** – Build your own custom apps!
+- 📚 **Tutorials** – Learn how to get started, even as a beginner.
+- 🤝 **Community Collaboration** – Share ideas, contribute, and make the project even better!
+- 🚀 **Regular Updates** – New features and apps added frequently.
+
+---
+
+### Why Move?
+The **PXL-Jam** served its purpose during the jam, but all future development will now take place in **PXL-Clock**. If you're interested in building **cool apps** or **learning new skills**, this is the place to be!
+
+### Winner's Announcement!
+
+We'll announce the winners in the new repo soon - stay tuned :)
+
+---
+
+🔗 **Go to the new repo now: [github.com/CuminAndPotato/PXL-Clock](https://github.com/CuminAndPotato/PXL-Clock)**
+
+🙌 **Let’s keep the PXL spirit alive – see you there!**
+
+
+---
+
+
 <div align="center">
    <h1>🎄 Welcome to the PXL-JAM 2024🎄</h1>
 </div>
